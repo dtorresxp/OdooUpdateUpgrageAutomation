@@ -22,7 +22,7 @@ class TestUpdate:
         self.lp.enterPassword(self.password)
         self.alp = self.lp.login()
 
-        time.sleep(5)
+        time.sleep(10)
 
         current_url = self.driver.current_url
         debugMode = '?debug'

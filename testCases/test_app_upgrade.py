@@ -1,5 +1,7 @@
 import subprocess
 import time
+import os
+import subprocess
 
 from pageObjects.LoginPage import LoginPage
 from utilities.readProperties import ReadConfig
@@ -14,8 +16,9 @@ class TestUpdate:
     logger = LogGen.logGen()
 
     def test_upgrade(self, setup):
-        cmd = '"F:\\Odoo 12.0\\python\\python.exe" "F:\\Odoo 12.0\\server\\odoo-bin" --conf "F:\\Odoo 12.0\\server\\odoo.conf"'
-        p = subprocess.Popen(cmd)
+        subprocess.call(['runas', '/user:Administrator', 'NET STOP odoo-server-12.0'])
+        time.sleep(5)
+        subprocess.call(['runas', '/user:Administrator', 'NET START odoo-server-12.0'])
 
         self.driver = setup
         self.driver.get(self.baseURL)
@@ -34,8 +37,5 @@ class TestUpdate:
         self.alp.upgrade_app("Library_Management")
 
         self.alp.logout()
-
-        p.kill()
-        print('process killed')
 
         self.driver.close()

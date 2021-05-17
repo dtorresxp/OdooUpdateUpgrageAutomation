@@ -1,5 +1,8 @@
 import time
 
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
+
 from utilities import CustomWait
 
 
@@ -40,3 +43,9 @@ class BasePage:
     def check_text_presence(self, by_locator, text):
         ele = CustomWait.wait(self.driver, 'text', by_locator, text)
         return ele
+
+    def type_and_enter(self, by_locator, value):
+        ele = CustomWait.wait(self.driver, 'presence', by_locator)
+        ele.clear()
+        ele.send_keys(value,Keys.ENTER)
+
